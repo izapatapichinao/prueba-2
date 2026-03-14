@@ -1,20 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root{
-    --texto-primario: #FFFFFF;;
+    --blanco-primario: #FFFFFF;;
     --texto-secundario: #737373;
-    --gris: #BDBDBD;
     --verde-primario: #cdf564;
     --verde-secundario: #b5d95b;
     --negro-primario: #1b1d1f;
-    --azul-primario: #599ac9;
     --azul-electrico: #08f0ff;
 }
 
 *{
     margin: 0;
     font-family: "Archivo Black", sans-serif;
-    color: var(--texto-primario);
+    color: var(--blanco-primario);
 }
 
 body{
@@ -26,7 +24,7 @@ body{
     "footer";
     min-height: 100vh;
     grid-template-rows: auto auto 1fr auto;
-    background-color: var(--negro-primario);
+    background-color: var(--blanco-primario);
 }
 
 /* Aside */
@@ -70,10 +68,12 @@ aside{
 .title-container{
     grid-area: title;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 1.5rem;
     text-align: center;
-    font-size: clamp(1rem, 2vw, 1.8rem);;
+    font-size: clamp(1rem, 2vw, 1.8rem);
+    line-height: 3;
 }
 
 /* Main */
@@ -81,6 +81,7 @@ main{
     grid-area: main;
     display: grid;
     grid-template-columns: auto 1fr auto;
+    margin-bottom: 1rem;
 }
 
 .pagination{
@@ -110,17 +111,16 @@ main{
     align-items: center;
 }
 
-.card3d-mobile, .card3d-laptop{
+.card3d-mobile, .card3d-tablet, .card3d-laptop{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 300px;    
-    background-color: var(--negro-primario);
     /* animacion background */
     transition: transform 0.3s ease;
 }
 
-.card3d-laptop{
+.card3d-laptop, .card3d-tablet{
     display: none;
 }
 
@@ -131,10 +131,16 @@ main{
     border-radius: 5px 5px 0 0;
     background-size: cover;
     background-position: center;
-    margin-top: 50px; 
+    margin-top: 40px; 
     display: flex;
     justify-content: center;
     align-items: flex-end;
+}
+
+.personaje-popout {
+    height: 80%;
+    transform-origin: bottom center; 
+    transition: transform 0.4s ease;
 }
 
 .name{
@@ -152,17 +158,11 @@ main{
 }
 
 /* Transiciones Imagenes */
-.personaje-popout {
-  height: 80%; 
-  transform-origin: bottom center; 
-  transition: transform 0.4s ease;
-}
-
 .card-img:hover .personaje-popout {
   transform: scale(1.3);
 }
 
-.card3d-mobile:hover, .card3d-laptop:hover {
+.card3d-mobile:hover, .card3d-tablet:hover, .card3d-laptop:hover {
     z-index: 10;
     transform: translateY(-10px);
     }
@@ -190,7 +190,64 @@ footer img{
 }
 
 /* MEDIA QUERIES */
+/* MEDIA QUERY TABLET */
 @media(width >=576px){
+    /* main */
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .cards{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 0;
+        width: auto;
+    }
+
+    .card3d-mobile, .card3d-tablet, .card3d-laptop{
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .card-img{
+        height: 250px;
+    }
+
+    .personaje-popout{
+        width: auto;
+        height: 80%;
+        max-width: 95%;
+    }
+    .card3d-laptop{
+        display: none;
+    }
+
+    .pagination{
+        margin: 0;
+    }
+
+    /* footer */
+    footer{
+        gap: 1.5rem;
+        font-size: 1.2rem;
+        padding: 1rem 0;
+    }
+
+    footer img{
+        width: clamp(100px, 1vw, 150px);
+    }
+}
+
+/* MEDIA QUERY PC */
+@media(width >=1024px){
     body{
         grid-template-areas: 
         "aside title" 
@@ -198,11 +255,6 @@ footer img{
         "footer footer";
         grid-template-columns: 220px auto;
         grid-template-rows: auto 1fr 180px;
-    }
-
-/* main */
-    main{
-        grid-template-columns: 1fr;
     }
 
 /* aside */
@@ -248,23 +300,34 @@ footer img{
     }
 
     /* main */
+    main{
+        grid-template-columns: 1fr;
+        margin-bottom: 2.5rem;
+    }
+    
     .pagination{
         display: none;
     }
 
     .cards{
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 40px;
-        padding: 0 2rem 2.5rem 2rem;
+        padding: 0 2rem;
+        width: 100%;
     }
 
-    .card3d-mobile, .card3d-laptop{
+    .card3d-laptop{
         display: flex;
-        justify-content: center;
-        margin: 0;
+    }
+
+    .card3d-mobile, .card3d-tablet, .card3d-laptop {
+        max-width: 450px;
         width: 100%;
-        max-width: 350px;
+    }
+
+    .card-img{
+        height: 450px;
     }
 
     .personaje-popout{
@@ -273,15 +336,13 @@ footer img{
         max-width: 95%;
     }
 
-    /* footer */
-    footer{
-        gap: 1.5rem;
-        font-size: 1.2rem;
-        padding: 1rem 0;
-    }
+}
 
-    footer img{
-        width: 5%;
+/* MEDIA QUERY PANTALLAS GRANDES*/
+@media(width >=1200px){
+    .cards{
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1600px;
+        margin: 2rem auto 0 auto;
     }
-
 }
